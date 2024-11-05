@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Class Time Table</title>
+</head>
+<body>
+    <h1>KAKI.IMADUDDIN</h1>
+    <h1>School Class Time Table</h1>
+    <table>
+        <tr>
+            <th>Day</th>
+            <th>9:00-9:50</th>
+            <th>9:50-10:40</th>
+            <th>10:40-11:00</th>
+            <th>11:00-11:50</th>
+            <th>11:50-12:40</th>
+            <th>12:00-1:00</th>
+            <th>1:00-1:50</th>
+            <th>1:50-2:30</th>
+            <th>2:30-3:20</th>
+        </tr>
+        <tr>
+            <td class="days">Monday</td>
+            <td>Physics</td>
+            <td>Chemistry</td>
+            <td rowspan="6">Break</td>
+            <td>Maths</td>
+            <td>Computer Science</td>
+            <td rowspan="6">Lunch</td>
+            <td>English</td>
+            <td>Tamil</td>
+            <td>Maths</td>
+        </tr>
+        <tr>
+            <td class="days">Tuesday</td>
+            <td>Chemistry</td>
+            <td>Physics</td>
+            <td>Maths</td>
+            <td>Tamil</td>
+            <td colspan="2">Computer Science Lab</td>
+            <td>English</td>
+        </tr>
+        <tr>
+            <td class="days">Wednesday</td>
+            <td>Maths</td>
+            <td>Chemistry</td>
+            <td>Physics</td>
+            <td>Computers</td>
+            <td>Tamil</td>
+            <td>English</td>
+            <td>PT</td>
+        </tr>
+        <tr>
+            <td class="days">Thursday</td>
+            <td>English</td>
+            <td>Physics</td>
+            <td>Maths</td>
+            <td>Chemistry</td>
+            <td>Tamil</td>
+            <td>Computers</td>
+            <td>Tamil</td>
+        </tr>
+        <tr>
+            <td class="days">Friday</td>
+            <td>Physics</td>
+            <td>Maths</td>
+            <td>Computers</td>
+            <td>English</td>
+            <td>Tamil</td>
+            <td>Chemistry</td>
+            <td>Physics</td>
+        </tr>
+        <tr>
+            <td class="days">Saturday</td>
+            <td>Physics</td>
+            <td>Chemistry</td>
+            <td>Maths</td>
+            <td>English</td>
+            <td>Tamil</td>
+            <td>Computers</td>
+            <td>Library</td>
+        </tr>
+    </table>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #444;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+        th {
+            background-color: #6a5acd;
+            color: white;
+        }
+        .days {
+            background-color: #f08080;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</body>
+</html>

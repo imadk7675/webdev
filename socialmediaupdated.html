@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>220191601025</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fafafa;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            background-color: #fff;
+            border-bottom: 1px solid #dbdbdb;
+            padding: 10px 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            text-align: center; /* Center align all content in navbar */
+        }
+
+        .navbar h1 {
+            font-family: 'Pacifico', cursive;
+            color: #333;
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .navbar .menu {
+            display: inline-block; /* Ensures the menu is centered */
+            margin-top: 10px;
+        }
+
+        .navbar .menu a {
+            text-decoration: none;
+            color: #333;
+            font-size: 18px;
+            margin: 0 20px;
+        }
+
+        /* Time styling */
+        .time-container {
+            margin-top: 130px; /* Adjust for navbar height */
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        /* Feed styling */
+        .feed {
+            margin-top: 160px; /* Adjust for time and navbar */
+            display: flex;
+            justify-content: center;
+            padding-bottom: 20px;
+        }
+
+        .feed-container {
+            width: 500px;
+        }
+
+        .post {
+            background-color: #fff;
+            border: 1px solid #dbdbdb;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .post-header img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .post-header h4 {
+            margin: 0;
+        }
+
+        .post-image img {
+            width: 100%;
+            height: auto;
+            max-height: 300px; /* Limit image height */
+            object-fit: cover;
+            border-bottom: 1px solid #dbdbdb;
+        }
+
+        .post-footer {
+            padding: 10px;
+        }
+
+        .post-footer .icons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .post-footer .icons i {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .post-footer .likes {
+            font-weight: bold;
+        }
+
+        .post-footer .comments {
+            color: #999;
+            font-size: 14px;
+        }
+
+        .like-btn {
+            color: #ed4956;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <h1>funTime Images</h1>
+        <div class="menu">
+            <a href="#">Home</a>
+            <a href="#">Explore</a>
+            <a href="#">Profile</a>
+        </div>
+    </div>
+
+    <!-- Time above posts -->
+    <div class="time-container">
+        <div id="currentTime">00:00:00</div>
+    </div>
+
+    <!-- Feed Section -->
+    <div class="feed">
+        <div class="feed-container">
+
+            <!-- Post 1 -->
+            <div class="post">
+                <div class="post-header">
+                    <img src="raiyan1.jpg" alt="User">
+                    <h4>raiyuu_chapri_rat</h4>
+                </div>
+                <div class="post-image">
+                    <img src="raiyan3.jpg" alt="Post Image 1" class="post1-image">
+                </div>
+                <div class="post-footer">
+                    <div class="icons">
+                        <i class="like-btn" onclick="toggleLike(this)">❤</i>
+                        <i>💬</i>
+                        <i>🔗</i>
+                    </div>
+                    <div class="likes">100 likes</div>
+                    <div class="comments">View all 10 comments</div>
+                </div>
+            </div>
+
+            <!-- Post 2 -->
+            <div class="post">
+                <div class="post-header">
+                    <img src="alaudeen1.jpg" alt="User">
+                    <h4>ala_bash_gundu</h4>
+                </div>
+                <div class="post-image">
+                    <img src="alaudeen2.jpg" alt="Post Image 2" class="post2-image">
+                </div>
+                <div class="post-footer">
+                    <div class="icons">
+                        <i class="like-btn" onclick="toggleLike(this)">❤</i>
+                        <i>💬</i>
+                        <i>🔗</i>
+                    </div>
+                    <div class="likes">250 likes</div>
+                    <div class="comments">View all 25 comments</div>
+                </div>
+            </div>
+
+            <!-- Post 3 -->
+            <div class="post">
+                <div class="post-header">
+                    <img src="riza1.jpg" alt="User">
+                    <h4>riz_twin</h4>
+                </div>
+                <div class="post-image">
+                    <img src="riza3.jpg" alt="Post Image 3" class="post3-image">
+                </div>
+                <div class="post-footer">
+                    <div class="icons">
+                        <i class="like-btn" onclick="toggleLike(this)">❤</i>
+                        <i>💬</i>
+                        <i>🔗</i>
+                    </div>
+                    <div class="likes">250 likes</div>
+                    <div class="comments">View all 25 comments</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>Instagram Clone - All rights reserved © 2024</p>
+    </div>
+
+    <!-- JavaScript for Slideshow and Time -->
+    <script>
+        // Slideshow images for each post
+        const post1Images = ['raiyan1.jpg', 'raiyan2.jpg', 'raiyan3.jpg'];
+        const post2Images = ['alaudeen1.jpg', 'alaudeen2.jpg', 'alaudeen3.jpg'];
+        const post3Images = ['riza1.jpg', 'riza2.jpg', 'riza3.jpg'];
+
+        let post1Index = 0;
+        let post2Index = 0;
+        let post3Index = 0;
+
+        // Function to change images every 3 seconds
+        setInterval(() => {
+            document.querySelector('.post1-image').src = post1Images[post1Index];
+            post1Index = (post1Index + 1) % post1Images.length;
+
+            document.querySelector('.post2-image').src = post2Images[post2Index];
+            post2Index = (post2Index + 1) % post2Images.length;
+
+            document.querySelector('.post3-image').src = post3Images[post3Index];
+            post3Index = (post3Index + 1) % post3Images.length;
+        }, 3000);
+
+        // Like Button Toggle
+        function toggleLike(element) {
+            element.classList.toggle('liked');
+        }
+
+        // Update current time every second
+        function updateTime() {
+            const currentTime = new Date();
+            const hours = String(currentTime.getHours()).padStart(2, '0');
+            const minutes = String(currentTime.getMinutes()).padStart(2, '0');
+            const seconds = String(currentTime.getSeconds()).padStart(2, '0');
+            document.getElementById('currentTime').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+
+        // Initial time update and set interval
+        updateTime();
+        setInterval(updateTime, 1000); // Update every second
+    </script>
+
+</body>
+</html>

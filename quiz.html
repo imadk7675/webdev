@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>220191601025</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .quiz-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 15px;
+        }
+
+        .navigation {
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+        }
+
+        #result {
+            margin-top: 20px;
+            display: none;
+        }
+
+        #timer {
+            font-size: 20px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div id="timer">Time Remaining: 2:00</div>
+        <div id="quiz"></div>
+        <div class="navigation">
+            <button id="prevBtn" onclick="changePage(-1)">Previous</button>
+            <button id="nextBtn" onclick="changePage(1)">Next</button>
+            <button id="submitBtn" onclick="showResults()" style="display:none;">Submit</button>
+        </div>
+        <div id="result"></div>
+    </div>
+    <script>
+        const questions = [
+            { question: "Which team won the IPL in 2020?", answers: ["Mumbai Indians", "Chennai Super Kings", "Royal Challengers Bangalore", "Delhi Capitals"], correct: 0 },
+            { question: "Who is the highest run-scorer in IPL history?", answers: ["Virat Kohli", "Suresh Raina", "David Warner", "Rohit Sharma"], correct: 1 },
+            { question: "Which player has the most IPL centuries?", answers: ["Chris Gayle", "Virat Kohli", "AB de Villiers", "Rohit Sharma"], correct: 0 },
+            { question: "In which year was the first IPL held?", answers: ["2007", "2008", "2009", "2010"], correct: 1 },
+            { question: "Which team has the most IPL titles?", answers: ["Chennai Super Kings", "Mumbai Indians", "Kolkata Knight Riders", "Sunrisers Hyderabad"], correct: 1 },
+            { question: "Who is known as 'Captain Cool' in IPL?", answers: ["MS Dhoni", "Rohit Sharma", "Virat Kohli", "Gautam Gambhir"], correct: 0 },
+            { question: "Which team is known as the 'Yellow Brigade'?", answers: ["Chennai Super Kings", "Delhi Capitals", "Sunrisers Hyderabad", "Rajasthan Royals"], correct: 0 },
+            { question: "Who won the IPL in 2021?", answers: ["Kolkata Knight Riders", "Chennai Super Kings", "Delhi Capitals", "Mumbai Indians"], correct: 1 },
+            { question: "What is the maximum number of teams that participated in IPL 2022?", answers: ["6", "8", "10", "12"], correct: 2 }
+        ];
+
+        let currentPage = 0;
+        const questionsPerPage = 3;
+        const totalQuestions = questions.length;
+        let userAnswers = [];
+        let timer;
+        let timeRemaining = 120; // 2 minutes in seconds
+
+        function displayQuestions() {
+            const quizContainer = document.getElementById('quiz');
+            quizContainer.innerHTML = '';
+
+            const start = currentPage * questionsPerPage;
+            const end = start + questionsPerPage;
+            const pageQuestions = questions.slice(start, end);
+
+            pageQuestions.forEach((q, index) => {
+                const questionElement = document.createElement('div');
+                questionElement.classList.add('question');
+                questionElement.innerHTML = `
+                    <strong>${start + index + 1}. ${q.question}</strong><br>
+                    ${q.answers.map((answer, i) => `
+                        <input type="radio" name="q${start + index}" value="${i}" onchange="saveAnswer(${start + index}, this.value)"> ${answer}`).join('<br>')}
+                `;
+                quizContainer.appendChild(questionElement);
+            });
+
+            document.getElementById('prevBtn').disabled = currentPage === 0;
+            document.getElementById('nextBtn').disabled = end >= totalQuestions;
+            document.getElementById('submitBtn').style.display = (end >= totalQuestions) ? 'inline-block' : 'none';
+        }
+
+        function saveAnswer(questionIndex, answerIndex) {
+            userAnswers[questionIndex] = answerIndex;
+        }
+
+        function changePage(direction) {
+            currentPage += direction;
+            displayQuestions();
+        }
+
+        function showResults() {
+            clearInterval(timer);
+            let correctAnswers = 0;
+            let incorrectAnswers = [];
+
+            questions.forEach((q, index) => {
+                if (userAnswers[index] == q.correct) {
+                    correctAnswers++;
+                } else {
+                    incorrectAnswers.push(`Q${index + 1}: ${q.question} (Correct answer: ${q.answers[q.correct]})`);
+                }
+            });
+
+            const resultElement = document.getElementById('result');
+            resultElement.innerHTML = `<h3>Quiz Completed!</h3><p>Correct Answers: ${correctAnswers} out of ${totalQuestions}</p>`;
+            if (incorrectAnswers.length > 0) {
+                resultElement.innerHTML += `<h4>Incorrect Answers:</h4><ul>${incorrectAnswers.map(ans => `<li>${ans}</li>`).join('')}</ul>`;
+            }
+            resultElement.style.display = 'block';
+            document.getElementById('quiz').style.display = 'none';
+            document.querySelector('.navigation').style.display = 'none';
+        }
+
+        function startTimer() {
+            timer = setInterval(() => {
+                if (timeRemaining <= 0) {
+                    clearInterval(timer);
+                    showResults();
+                } else {
+                    timeRemaining--;
+                    document.getElementById('timer').innerText = `Time Remaining: ${Math.floor(timeRemaining / 60)}:${(timeRemaining % 60).toString().padStart(2, '0')}`;
+                }
+            }, 1000);
+        }
+
+        // Initial call to display the first page and start the timer
+        displayQuestions();
+        startTimer();
+    </script>
+</body>
+</html>

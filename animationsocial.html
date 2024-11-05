@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>220191601025</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fafafa;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            background-color: #fff;
+            border-bottom: 1px solid #dbdbdb;
+            padding: 10px 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            text-align: center;
+            transition: background-color 0.5s ease;
+        }
+
+        .navbar h1 {
+            font-family: 'Pacifico', cursive;
+            color: #333;
+            margin: 0;
+            font-size: 24px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar .menu {
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .navbar .menu a {
+            text-decoration: none;
+            color: #333;
+            font-size: 18px;
+            margin: 0 20px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar .menu a:hover {
+            color: #ed4956;
+        }
+
+        /* Time styling */
+        .time-container {
+            margin-top: 130px;
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        /* Feed styling */
+        .feed {
+            margin-top: 160px;
+            display: flex;
+            justify-content: center;
+            padding-bottom: 20px;
+        }
+
+        .feed-container {
+            width: 500px;
+        }
+
+        .post {
+            background-color: #fff;
+            border: 1px solid #dbdbdb;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            animation: fadeInPost 1s ease forwards;
+            position: relative;
+            overflow: hidden; /* Make sure the falling hearts stay within the post */
+        }
+
+        .post:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .post-header img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .post-header h4 {
+            margin: 0;
+        }
+
+        .post-image {
+            position: relative;
+            overflow: hidden;
+            height: 300px; /* Fixed height for consistent layout */
+        }
+
+        .post-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .post-image img.active {
+            opacity: 1;
+        }
+
+        .post-footer {
+            padding: 10px;
+        }
+
+        .post-footer .icons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .post-footer .icons i {
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .post-footer .icons i:hover {
+            transform: scale(1.2);
+        }
+
+        .post-footer .likes {
+            font-weight: bold;
+        }
+
+        .post-footer .comments {
+            color: #999;
+            font-size: 14px;
+        }
+
+        .like-btn.liked,
+        .comment-btn.commented {
+            color: #ed4956;
+            transform: scale(1.5);
+            animation: pulse 0.4s ease;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Heart/Comment animation shower */
+        .shower {
+            position: absolute;
+            top: 0;
+            font-size: 30px;
+            animation: fallShower 1.5s ease forwards;
+        }
+
+        @keyframes fallShower {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(100%);
+            }
+        }
+
+        /* Fade-in effect for posts */
+        @keyframes fadeInPost {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Footer styling */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border-top: 1px solid #dbdbdb;
+            margin-top: 20px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            font-size: 12px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <h1>funTime Images</h1>
+        <div class="menu">
+            <a href="#">Home</a>
+            <a href="#">Explore</a>
+            <a href="#">Profile</a>
+        </div>
+    </div>
+
+    <!-- Time above posts -->
+    <div class="time-container">
+        <div id="currentTime">00:00:00</div>
+    </div>
+
+    <!-- Feed Section -->
+    <div class="feed">
+        <div class="feed-container">
+
+            <!-- Post 1 -->
+            <div class="post">
+                <div class="post-header">
+                    <img src="raiyan1.jpg" alt="User">
+                    <h4>raiyuu_chapri_rat</h4>
+                </div>
+                <div class="post-image">
+                    <img src="raiyan1.jpg" alt="Post Image 1" class="active">
+                    <img src="raiyan2.jpg" alt="Post Image 1">
+                    <img src="raiyan3.jpg" alt="Post Image 1">
+                </div>
+                <div class="post-footer">
+                    <div class="icons">
+                        <i class="like-btn" onclick="toggleLike(this, 0)">❤</i>
+                        <i class="comment-btn" onclick="toggleComment(this, 0)">💬</i>
+                        <i>🔗</i>
+                    </div>
+                    <div class="likes">100 likes</div>
+                    <div class="comments">View all 10 comments</div>
+                </div>
+            </div>
+
+            <!-- Post 2 -->
+            <div class="post">
+                <div class="post-header">
+                    <img src="alaudeen1.jpg" alt="User">
+                    <h4>ala_bash_gundu</h4>
+                </div>
+                <div class="post-image">
+                    <img src="alaudeen1.jpg" alt="Post Image 2" class="active">
+                    <img src="alaudeen2.jpg" alt="Post Image 2">
+                    <img src="alaudeen3.jpg" alt="Post Image 2">
+                </div>
+                <div class="post-footer">
+                    <div class="icons">
+                        <i class="like-btn" onclick="toggleLike(this, 1)">❤</i>
+                        <i class="comment-btn" onclick="toggleComment(this, 1)">💬</i>
+                        <i>🔗</i>
+                    </div>
+                    <div class="likes">250 likes</div>
+                    <div class="comments">View all 25 comments</div>
+                </div>
+            </div>
+
+            <!-- Post 3 -->
+            <div class="post">
+                <div class="post-header">
+                    <img src="riza1.jpg" alt="User">
+                    <h4>riz_twin</h4>
+                </div>
+                <div class="post-image">
+                    <img src="riza1.jpg" alt="Post Image 3" class="active">
+                    <img src="riza2.jpg" alt="Post Image 3">
+                    <img src="riza3.jpg" alt="Post Image 3">
+                </div>
+                <div class="post-footer">
+                    <div class="icons">
+                        <i class="like-btn" onclick="toggleLike(this, 2)">❤</i>
+                        <i class="comment-btn" onclick="toggleComment(this, 2)">💬</i>
+                        <i>🔗</i>
+                    </div>
+                    <div class="likes">350 likes</div>
+                    <div class="comments">View all 30 comments</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>Instagram Clone - All rights reserved © 2024</p>
+    </div>
+
+    <!-- JavaScript for Slideshow, Time, and Animations -->
+    <script>
+        // Slideshow function for each post
+        function startSlideshow(postIndex) {
+            const postImages = document.querySelectorAll(`.post:nth-child(${postIndex + 1}) .post-image img`);
+            let currentIndex = 0;
+
+            setInterval(() => {
+                postImages[currentIndex].classList.remove('active');
+                currentIndex = (currentIndex + 1) % postImages.length;
+                postImages[currentIndex].classList.add('active');
+            }, 3000);
+        }
+
+        // Start slideshow for all posts
+        startSlideshow(0); // Post 1
+        startSlideshow(1); // Post 2
+        startSlideshow(2); // Post 3
+
+        // Function to update current time
+        function updateTime() {
+            const currentTime = new Date();
+            const hours = String(currentTime.getHours()).padStart(2, '0');
+            const minutes = String(currentTime.getMinutes()).padStart(2, '0');
+            const seconds = String(currentTime.getSeconds()).padStart(2, '0');
+            document.getElementById('currentTime').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+        setInterval(updateTime, 1000);
+
+        // Like and Comment button functions with shower effects
+        function toggleLike(element, postIndex) {
+            element.classList.toggle('liked');
+            showShower(postIndex, '❤');
+        }
+
+        function toggleComment(element, postIndex) {
+            element.classList.toggle('commented');
+            showShower(postIndex, '💬');
+        }
+
+        // Show 9 hearts or comments falling down the post
+        function showShower(postIndex, icon) {
+            const post = document.querySelectorAll('.post')[postIndex];
+
+            for (let i = 0; i < 9; i++) {
+                const shower = document.createElement('div');
+                shower.classList.add('shower');
+                shower.innerHTML = icon;
+                
+                // Randomize the start position and animation delay
+                shower.style.left = `${Math.random() * 100}%`;  // Random left position
+                shower.style.animationDelay = `${Math.random() * 0.5}s`; // Random delay
+
+                post.appendChild(shower);
+
+                // Remove the heart/comment after the animation ends
+                setTimeout(() => shower.remove(), 1500);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>220191601025</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://media.istockphoto.com/id/1279104620/photo/top-view-of-a-white-desktop-concept-job-search.jpg?s=612x612&w=0&k=20&c=Ow_kvA2wQ4rLlqX_oFHgpjLb1JMKyPQKLOPzbu6w6qw=');
+            background-size: contain;
+            background-position: center;
+            color: #fff;
+        }
+        
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 8px;
+        }
+        
+        h1 {
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+        }
+        
+        .form-group button {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #007BFF;
+            border: none;
+            color: #fff;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+        
+        .form-group .view-responses {
+            margin-top: 1rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Job Application Form</h1>
+        <form id="job-application-form">
+            <div class="form-group">
+                <label for="full-name">Full Name:</label>
+                <input type="text" id="full-name" name="full-name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="qualifications">Qualifications:</label>
+                <textarea id="qualifications" name="qualifications" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="experience">Experience:</label>
+                <textarea id="experience" name="experience" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="skills">Skills:</label>
+                <input type="text" id="skills" name="skills" required>
+            </div>
+            <div class="form-group">
+                <label for="industry-trends">Industry-Relevant Trends:</label>
+                <textarea id="industry-trends" name="industry-trends" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="job-description">Job Description:</label>
+                <textarea id="job-description" name="job-description" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label>Preferred Job Type:</label>
+                <label><input type="radio" name="job-type" value="full-time" required> Full-Time</label>
+                <label><input type="radio" name="job-type" value="part-time"> Part-Time</label>
+                <label><input type="radio" name="job-type" value="contract"> Contract</label>
+            </div>
+            <div class="form-group">
+                <label>Skills Check (Select all that apply):</label>
+                <label><input type="checkbox" name="skills-checkbox" value="javascript"> JavaScript</label>
+                <label><input type="checkbox" name="skills-checkbox" value="python"> Python</label>
+                <label><input type="checkbox" name="skills-checkbox" value="java"> Java</label>
+                <label><input type="checkbox" name="skills-checkbox" value="csharp"> C#</label>
+            </div>
+            <div class="form-group">
+                <label for="desired-position">Desired Position:</label>
+                <select id="desired-position" name="desired-position" required>
+                    <option value="">Select a position</option>
+                    <option value="developer">Developer</option>
+                    <option value="designer">Designer</option>
+                    <option value="manager">Manager</option>
+                    <option value="analyst">Analyst</option>
+                </select> 
+            </div>
+            <div class="form-group">
+                <button type="submit">Submit</button>
+            </div>
+            <div class="form-group view-responses" id="view-responses">
+                <button type="button" onclick="viewResponses()">View Responses</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        document.getElementById('job-application-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const responses = {};
+            formData.forEach((value, key) => {
+                if (!responses[key]) {
+                    responses[key] = value;
+                } else if (Array.isArray(responses[key])) {
+                    responses[key].push(value);
+                } else {
+                    responses[key] = [responses[key], value];
+                }
+            });
+            
+            // Store responses in local storage
+            localStorage.setItem('jobApplicationResponses', JSON.stringify(responses));
+            
+            // Display the view responses button
+            document.getElementById('view-responses').style.display = 'block';
+        });
+        
+        function viewResponses() {
+            const responses = JSON.parse(localStorage.getItem('jobApplicationResponses'));
+            if (responses) {
+                alert(JSON.stringify(responses, null, 2));
+            } else {
+                alert('No responses found.');
+            }
+        }
+    </script> 
+</body>
+</html>
